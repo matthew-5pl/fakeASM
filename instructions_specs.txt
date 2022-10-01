@@ -1,0 +1,32 @@
+fakeASM version 0.1
+
+Instructions:
+
+mov: can move a number to a register or the value of a register to another
+push: push to front
+pop: pop off the stack
+out: print number to the console
+opsh: print latest push to the console
+ret: return
+jmp: jump to line in the program
+jnz: conditional jump (jump if not zero)
+jz: conditional jmp (jump if zero)
+add: add a number to a register or a register to another
+sub: subtract a number to a register or a register to another
+mul: multiply a number to a register or a register to another
+div: divide a number to a register or a register to another
+mod: get the remainder of a division (number to register or register to register)
+nop: no operation
+och: print a char to the console
+arr: add to the array register
+clr: clear the array register
+oar: print the array register (backwards)
+
+Architecture:
+
+The "machine" has 3 8-bit registers (ra, rb and rc) and an array register(rax, size 255)
+The machine will halt if the processor status is set to RET (other statuses are CONTINUE and END, the latter is currently unused)
+The machine also comes with the la and lp registers, respectively latest mov and latest push-pop.
+Code is read and loaded from C. Example in src/test.asm can convert a number initially stored in ra from decimal to binary.
+
+Have fun!
