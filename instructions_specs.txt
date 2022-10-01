@@ -5,7 +5,7 @@ Instructions:
 mov: can move a number to a register or the value of a register to another
 push: push to front
 pop: pop off the stack
-out: print number to the console
+out: print number to the console (from register or from literal)
 opsh: print latest push to the console
 ret: return
 jmp: jump to line in the program
@@ -21,10 +21,11 @@ och: print a char to the console
 arr: add to the array register
 clr: clear the array register
 oar: print the array register (backwards)
+ouc: print char from ch register
 
 Architecture:
 
-The "machine" has 3 8-bit registers (ra, rb and rc) and an array register(rax, size 255)
+The "machine" has 4 8-bit registers (ra, rb, rc and ch) and an array register(rax, size 255)
 The machine will halt if the processor status is set to RET (other statuses are CONTINUE and END, the latter is currently unused)
 The machine also comes with the la and lp registers, respectively latest mov and latest push-pop.
 Code is read and loaded from C. Example in src/test.asm can convert a number initially stored in ra from decimal to binary.

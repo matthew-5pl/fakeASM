@@ -1,5 +1,5 @@
 main:
-    mov ra,13
+    mov ra,255
     mov rb,0
     ; convert
     mov rb,ra

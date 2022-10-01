@@ -26,6 +26,7 @@ typedef struct machine {
     uint8_t a;                  // register a
     uint8_t b;                  // register b
     uint8_t c;                  // register c
+    unsigned char ch;           // char register
     uint8_t ax[255];            // array register
     uint8_t cnt;                // array counter
     uint8_t la;                 // latest mov
@@ -36,6 +37,8 @@ typedef struct machine {
 typedef void (*program_t)(machine*);
 
 processor_status_t mov(machine* m, uint8_t value, processor_reg_t reg);
+
+processor_status_t cmov(machine* m, char value, processor_reg_t reg);
 
 uint8_t push(machine* m, uint8_t value);
 

@@ -10,6 +10,13 @@ processor_status_t mov(machine* m, uint8_t value, processor_reg_t reg) {
     return CONTINUE;
 }
 
+processor_status_t cmov(machine* m, char value, processor_reg_t reg) {
+    m->ch = value;
+    m->la = value;
+    m->status = CONTINUE;
+    return CONTINUE;
+}
+
 uint8_t push(machine* m, uint8_t value) {
     m->lp = value;
     //printf("push %d\n", m->lp);
@@ -92,6 +99,12 @@ void parse(machine* m, char* bufin) {
 
     m->status = CONTINUE;
 
+    char* allchars = malloc(sizeof(char)*256);
+
+    for(int o = 0; o < 255; o++) {
+        allchars[o] = (unsigned char)o;
+    }
+
     size_t len = 0;
     ssize_t read;
 
@@ -149,6 +162,11 @@ void parse(machine* m, char* bufin) {
                     else if(strstr(bufof, "ra")) { mov(m, m->a, RC); }
                     else {res = strtol(bufof, NULL, 10); mov(m, res, RC); }
                 }
+                else if(strstr(bf2[j], "rch,")) {
+                    char *bufof = strstr(bf2[j], ",");
+                    memmove(&bufof[0], &bufof[0 + 1], strlen(bufof) - 0);
+                    cmov(m, bufof[0], RC);
+                }
                 j++;
             }
             else if(strstr(bf2[j], "push")) {
@@ -193,16 +211,16 @@ void parse(machine* m, char* bufin) {
                     printf("%d", res);
                 }
                 j++;
-            }
-            else if(strstr(bf2[j], "opsh")) {
+            } else if(strstr(bf2[j], "ouc")) {
+                printf("%c", m->ch);
+                j++;
+            } else if(strstr(bf2[j], "opsh")) {
                 printf("%d", m->lp);
                 j++;
-            }
-            else if(strstr(bf2[j], "ret")) {
+            } else if(strstr(bf2[j], "ret")) {
                 ret(m);
                 j++;
-            }
-            else if(strstr(bf2[j], "jmp")) {
+            } else if(strstr(bf2[j], "jmp")) {
                 char *bufof = strstr(bf2[j], "jmp");
                 bufof[0] = '0';
                 bufof[1] = '0';
